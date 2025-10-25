@@ -5,8 +5,8 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 // En SexoController.php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/apple6b/config/database.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/apple6b/app/models/Sexo.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/microsoftvadf/config/database.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/microsoftvadf/app/models/Sexo.php';
 
 
 
