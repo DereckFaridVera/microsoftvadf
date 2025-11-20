@@ -2,88 +2,142 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Actualizar Teléfono</title>
+    <title>Editar Dirección</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
+        :root {
+            --primary: #007bff;
+            --bg1: #0f172a;
+            --bg2: #1e293b;
+            --glass: rgba(255,255,255,.10);
+            --text: #e2e8f0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f6f8;
-            padding: 40px;
+            background: radial-gradient(circle at top left, var(--bg1), #020617, var(--bg2));
+            font-family: 'Segoe UI', sans-serif;
+            color: var(--text);
+            min-height: 100vh;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
         }
 
-        .form-container {
-            max-width: 500px;
-            margin: auto;
-            background-color: #fff;
-            padding: 30px 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+        .page { width: 100%; max-width: 580px; }
 
-        .form-container h2 {
+        .topbar {
+            display: flex;
+            justify-content: space-between;
             margin-bottom: 20px;
-            color: #333;
-            text-align: center;
         }
 
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-            color: #444;
+        .btn-nav {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255,255,255,.12);
+            color: var(--text);
+            text-decoration: none;
+        }
+        .btn-nav:hover { background: rgba(255,255,255,.25); }
+
+        .glass-card {
+            background: var(--glass);
+            padding: 25px;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,.25);
+            backdrop-filter: blur(15px);
         }
 
-        input[type="text"],
+        form { display: flex; flex-direction: column; gap: 14px; }
+
+        label { font-size: .9rem; }
+
+        textarea,
         select {
             width: 100%;
-            padding: 10px 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,.4);
+            background: rgba(0,0,0,.35);
+            color: var(--text);
+            margin-top: 4px;
+            font-size: .95rem;
         }
 
-        input[type="submit"] {
-            background-color: #28a745;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
+        textarea { resize: vertical; min-height: 70px; }
+
+        textarea:focus, select:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 25px;
             cursor: pointer;
-            font-size: 16px;
-            width: 100%;
+            font-size: .9rem;
+            border: none;
         }
 
-        input[type="submit"]:hover {
-            background-color: #218838;
+        .btn-secondary { background: rgba(255,255,255,.15); color: var(--text); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #38bdf8);
+            color: white;
         }
     </style>
 </head>
 <body>
 
-<div class="form-container">
-    <h2>Actualizar Teléfono</h2>
-    <form action="../../app/controllers/DireccionController.php?action=update" method="POST">
+<div class="page">
 
-        <!-- ID oculto del teléfono -->
-        <input type="hidden" name="iddireccion" value="<?= $direccion['iddireccion'] ?>">
+    <div class="topbar">
+        <h2>Editar Dirección</h2>
 
-        <label for="idpersona">Persona:</label>
-        <select name="idpersona" id="idpersona" required>
-            <option value="">Seleccione una persona</option>
-            <?php foreach ($personas as $persona): ?>
-                <option value="<?= $persona['idpersona'] ?>" 
-                    <?= $persona['idpersona'] == $direccion['idpersona'] ? 'selected' : '' ?>>
-                    <?= $persona['apellidos'] . ' ' . $persona['nombres'] ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
+        <div>
+            <a href="/microsoftvadf/public/direccion/index" class="btn-nav">⬅ Volver</a>
+            <a href="/microsoftvadf/public/" class="btn-nav">🏠 Inicio</a>
+        </div>
+    </div>
 
-        <label for="nombre">Número de Teléfono:</label>
-        <input type="text" name="nombre" id="nombre" value="<?= $direccion['nombre'] ?>" required>
+    <div class="glass-card">
 
-        <input type="submit" value="Actualizar Teléfono">
-    </form>
+        <!-- Ajusta esta ruta al controlador real si ya la tienes -->
+        <form action="../../app/controllers/DireccionController.php?action=update" method="POST">
+
+            <input type="hidden" name="iddireccion"
+                   value="<?= htmlspecialchars($direccion['iddireccion']) ?>">
+
+            <label for="direccion">Dirección:</label>
+            <textarea name="direccion" id="direccion" required><?= htmlspecialchars($direccion['direccion']) ?></textarea>
+
+            <label for="idpersona">Persona:</label>
+            <select name="idpersona" id="idpersona" required>
+                <?php foreach ($personas as $persona): ?>
+                    <option value="<?= $persona['idpersona'] ?>"
+                        <?= $persona['idpersona'] == $direccion['idpersona'] ? 'selected' : '' ?>>
+                        <?= $persona['apellidos'] . ' ' . $persona['nombres'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <div class="buttons">
+                <a href="/microsoftvadf/public/direccion/index" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+            </div>
+
+        </form>
+    </div>
+
 </div>
 
 </body>

@@ -1,9 +1,17 @@
-// Script básico para validación de formularios
+// Mejor validación visual moderna
 function validateForm() {
-    var nombre = document.getElementById("nombre").value;
-    if (nombre == "") {
-        alert("El campo Nombre no puede estar vacío.");
+    let nombre = document.getElementById("nombre");
+
+    if (!nombre || nombre.value.trim() === "") {
+        Swal.fire({
+            icon: "warning",
+            title: "Campo vacío",
+            text: "El nombre no puede estar vacío.",
+            background: "rgba(15, 23, 42, 0.9)",
+            color: "#fff"
+        });
         return false;
     }
+
     return true;
 }
